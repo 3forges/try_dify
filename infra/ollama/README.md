@@ -136,6 +136,8 @@ So well, I will have, it seems, to try something else to be able to do speech to
 
 There might be a good chance with : https://hub.docker.com/r/linuxserver/faster-whisper
 
+also i'd say even more hope on https://github.com/didevlab/audio-transcriber-whisper-api (but that one i really don't know if it can itnterate in dify)
+
 ## Ollama and GPUs
 
 Refs:
