@@ -24,44 +24,55 @@ RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
     conda --version
 
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    conda init
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    conda create -n tolt_env
+COPY VoyageVocab /tolt/app
+COPY environment.yml /tolt/app
+WORKDIR /tolt/app
 
 RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    conda activate tolt_env
+    conda env create -f environment.yml
+
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    conda init bash
+
+RUN echo "export PATH='\$PATH:\$HOME/anaconda3/bin' && conda activate tolt_env" > ~/.bashrc
+# RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+#     conda activate tolt_env
 
 # SHELL ["conda", "activate", "tolt_env"]
 # RUN . ~/.bashrc && conda --version
-# RUN . ~/.bashrc && conda create -n myenv llm && conda activate llm
+# RUN . ~/.bashrc && conda create -n tolt_env llm && conda activate llm
+
 
 RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    python --version
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    pip -V
+    bash -c 'echo "check in conda activated env: " && source ~/.bashrc && conda --version && python --version && pip -V && '
+
+# RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+#     python --version
+# RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+#     pip -V
 
 
-COPY VoyageVocab /tolt/app
-
-WORKDIR /tolt/app
 
 
 # ---
 # That's for CPU, not CUDA, not ROCm
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu"]
+# RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+#     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 
 # ---
 # Install Whisper
 # RUN pip install git+https://github.com/openai/whisper.git
 # RUN pip install -U openai-whisper
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    pip install openai-whisper
+SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install openai-whisper"]
+# RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+#     pip install openai-whisper
 # ---
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    pip install gradio
+
+SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install gradio"]
+# RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+#     pip install gradio
 
 
 EXPOSE 7860
