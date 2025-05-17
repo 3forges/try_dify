@@ -25,8 +25,8 @@ RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
     conda --version
 
 RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    conda create -n myenv llm && \
-    conda activate llm
+    conda create -n tolt_env && \
+    conda activate tolt_env
 # RUN . ~/.bashrc && conda --version
 # RUN . ~/.bashrc && conda create -n myenv llm && conda activate llm
 
