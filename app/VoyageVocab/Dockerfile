@@ -19,8 +19,16 @@ RUN chown $NEW_LX_USER_NAME:$NEW_LX_USER_GRP_NAME -R /tolt
 USER $NEW_LX_USER_NAME
 RUN ./install.miniconda.sh
 
-RUN . ~/.bashrc && conda --version
-RUN . ~/.bashrc && conda create -n myenv llm && conda activate llm
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    bash -c 'echo "in docker build, check conda install:" && source ~/.bashrc && conda --version'
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    conda --version
+
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    conda create -n myenv llm && \
+    conda activate llm
+# RUN . ~/.bashrc && conda --version
+# RUN . ~/.bashrc && conda create -n myenv llm && conda activate llm
 
 RUN python3 --version 
 RUN python --version
