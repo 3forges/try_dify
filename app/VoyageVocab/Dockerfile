@@ -24,7 +24,7 @@ RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
     conda --version
 
-COPY VoyageVocab /tolt/app
+COPY ./VoyageVocab /tolt/app/
 COPY environment.yml /tolt/app
 WORKDIR /tolt/app
 

@@ -13,4 +13,9 @@ docker exec -it ${CONTAINER_NAME} bash -c 'python --version'
 
 ```bash
 docker build -t tolt/whisper:0.0.1 .
+
+docker run --name VoyageVocab \
+  --restart unless-stopped \
+  -itd -p 0.0.0.0:7860:7860 \
+  tolt/whisper:0.0.1
 ```
