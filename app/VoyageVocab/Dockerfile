@@ -36,8 +36,10 @@ SHELL ["conda", "activate", "tolt_env"]
 # RUN . ~/.bashrc && conda --version
 # RUN . ~/.bashrc && conda create -n myenv llm && conda activate llm
 
-RUN python --version
-RUN pip -V
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    python --version
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    pip -V
 
 
 COPY VoyageVocab /tolt/app
@@ -47,16 +49,19 @@ WORKDIR /tolt/app
 
 # ---
 # That's for CPU, not CUDA, not ROCm
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 
 # ---
 # Install Whisper
 # RUN pip install git+https://github.com/openai/whisper.git
 # RUN pip install -U openai-whisper
-RUN pip install openai-whisper
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    pip install openai-whisper
 # ---
-RUN pip install gradio
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    pip install gradio
 
 
 EXPOSE 7860
