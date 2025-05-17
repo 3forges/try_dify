@@ -40,6 +40,7 @@ RUN pip3 install torch torchvision torchaudio --index-url https://download.pytor
 # ---
 # Install Whisper
 # RUN pip install git+https://github.com/openai/whisper.git
+# RUN pip install -U openai-whisper
 RUN pip install openai-whisper
 # ---
 RUN pip install gradio
