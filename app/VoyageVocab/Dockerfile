@@ -36,9 +36,8 @@ SHELL ["conda", "activate", "tolt_env"]
 # RUN . ~/.bashrc && conda --version
 # RUN . ~/.bashrc && conda create -n myenv llm && conda activate llm
 
-RUN python3 --version 
 RUN python --version
-RUN pip3 -V
+RUN pip -V
 
 
 COPY VoyageVocab /tolt/app
@@ -48,7 +47,7 @@ WORKDIR /tolt/app
 
 # ---
 # That's for CPU, not CUDA, not ROCm
-RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 
 # ---
