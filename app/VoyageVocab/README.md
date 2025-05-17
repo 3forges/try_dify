@@ -10,3 +10,7 @@ docker run --name ${CONTAINER_NAME} \
 docker exec -it ${CONTAINER_NAME} bash -c 'python --version'
 
 ```
+
+```bash
+docker build -t tolt/whisper:0.0.1 .
+```
