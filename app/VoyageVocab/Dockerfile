@@ -44,7 +44,7 @@ RUN echo "export PATH='\$PATH:\$HOME/anaconda3/bin' && conda activate tolt_env" 
 
 
 RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    bash -c 'echo "check in conda activated env: " && source ~/.bashrc && conda --version && python --version && pip -V && '
+    bash -c 'echo "check in conda activated env: " && source ~/.bashrc && conda --version && python --version && pip -V'
 
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     python --version
@@ -77,4 +77,5 @@ SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install gradio"]
 
 EXPOSE 7860
 
-CMD [ "python", "VoyageVocab.py" ]
+# CMD [ "python", "VoyageVocab.py" ]
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "tolt_env", "python", "VoyageVocab.py"]
