@@ -25,11 +25,10 @@ RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
     conda --version
 
 RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    conda create -n tolt_env && \
-    conda init && \
-    conda activate tolt_env
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
     conda init
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    conda create -n tolt_env
+
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     conda activate tolt_env
 
