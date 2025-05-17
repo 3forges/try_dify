@@ -7,14 +7,14 @@ ARG NEW_LX_USER_UID='1000'
 
 RUN apt-get update -y && apt-get install -y ffmpeg
 
-RUN mkdir -p /tolt
+RUN mkdir -p /tolt/app
 WORKDIR /tolt
 COPY create.lx.user.sh .
 RUN chmod a+x ./create.lx.user.sh && ./create.lx.user.sh
 COPY install.miniconda.sh .
 RUN chmod a+x ./install.miniconda.sh
 
-RUN chown $NEW_LX_USER_NAME:$NEW_LX_USER_NAME -R /tolt
+RUN chown $NEW_LX_USER_NAME:$NEW_LX_USER_GRP_NAME -R /tolt
 
 USER $NEW_LX_USER_NAME
 RUN ./install.miniconda.sh
@@ -30,3 +30,19 @@ RUN pip3 -V
 # ---
 # That's for CPU, not CUDA, not ROCm
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+
+
+# ---
+# Install Whisper
+RUN pip install git+https://github.com/openai/whisper.git
+
+# ---
+RUN pip install gradio
+
+COPY VoyageVocab /tolt/app
+
+WORKDIR /tolt/app
+
+EXPOSE 7860
+
+CMD [ "python", "VoyageVocab.py" ]
