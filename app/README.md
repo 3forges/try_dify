@@ -98,7 +98,14 @@ docker run --name VoyageVocab \
 
 docker exec -u root VoyageVocab bash -c 'rm /tolt/app/VoyageVocab.py'
 docker cp ./VoyageVocab.py VoyageVocab:/tolt/app/
+docker cp ./entrypoint.2.sh VoyageVocab:/tolt/app/
+
+docker exec -u root VoyageVocab bash -c 'rm /tolt/app/entrypoint.sh'
+docker exec -u root VoyageVocab bash -c 'cp /tolt/app/entrypoint.2.sh /tolt/app/entrypoint.sh'
+docker exec -u root VoyageVocab bash -c 'chmod a+x /tolt/app/entrypoint.sh'
+
 docker exec -u root VoyageVocab bash -c 'chown tolt:tolteques -R /tolt/app/'
+
 
 docker exec -u root VoyageVocab bash -c 'ls -alh /tolt/app/'
 
