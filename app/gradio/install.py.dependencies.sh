@@ -8,4 +8,4 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 pip install git+https://github.com/openai/whisper.git
 
 
-# pip install gradio langchain langchain-community
+pip install gradio langchain langchain-community
