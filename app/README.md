@@ -81,3 +81,10 @@ docker run --name VoyageVocab \
 docker stop VoyageVocab && docker rm VoyageVocab
 
 ```
+
+
+## Whisper on Kubernetes
+
+I found:
+
+* https://artifacthub.io/packages/helm/test-opea/whisper

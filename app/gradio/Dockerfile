@@ -59,13 +59,16 @@ SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c"]
 #     python --version
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     pip -V
-RUN python --version && pip -V
+
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    python --version && pip -V
 
 
 
 # ---
 # That's for CPU, not CUDA, not ROCm
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
@@ -73,7 +76,8 @@ RUN pip install torch torchvision torchaudio --index-url https://download.pytorc
 # ---
 # Install Whisper
 # RUN pip install git+https://github.com/openai/whisper.git
-RUN pip install -U openai-whisper gradio
+RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+    pip install -U openai-whisper gradio
 # SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install openai-whisper"]
 # RUN pip install openai-whisper
 # ---
