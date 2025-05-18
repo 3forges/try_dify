@@ -81,4 +81,6 @@ COPY entrypoint.sh /tolt/app/
 # RUN chmod a+x /tolt/app/entrypoint.sh
 USER $NEW_LX_USER_NAME
 # CMD [ "python", "VoyageVocab.py" ]
-ENTRYPOINT ["/bin/bash", "-c", "chmod a+x /tolt/app/entrypoint.sh && /tolt/app/entrypoint.sh"]
+# ENTRYPOINT ["/bin/bash", "-c", "chmod a+x /tolt/app/entrypoint.sh && /tolt/app/entrypoint.sh"]
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "tolt_env", "python", "VoyageVocab.py"]
+ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "tolt_env", "bash", "-c", "/tolt/app/entrypoint.sh"]
