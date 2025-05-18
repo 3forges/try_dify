@@ -78,8 +78,29 @@ docker run --name VoyageVocab \
   -itd -p 0.0.0.0:7860:7860 \
   tolt/whisper:0.0.1
 
+# docker stop VoyageVocab && docker rm VoyageVocab
+
+# ---
+# Then I waited laong time that the app starts, because
+# python dependencies installations were run in the
+# startup command
+
+docker commit VoyageVocab tolt/whisper:0.0.2
+
+# And then I ran:
+
 docker stop VoyageVocab && docker rm VoyageVocab
 
+docker run --name VoyageVocab \
+  --restart unless-stopped \
+  -itd -p 0.0.0.0:7860:7860 \
+  tolt/whisper:0.0.2
+
+docker exec -u root VoyageVocab bash -c 'rm /tolt/app/VoyageVocab.py'
+docker cp ./VoyageVocab.py VoyageVocab:/tolt/app/
+docker exec -u root VoyageVocab bash -c 'chown tolt:tolteques -R /tolt/app/'
+
+docker exec -u root VoyageVocab bash -c 'chown tolt:tolteques -R /tolt/app/'
 ```
 
 

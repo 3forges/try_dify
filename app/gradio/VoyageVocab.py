@@ -18,10 +18,16 @@ def get_examples(file):
         data = f.read()
     return data
 
-
+def jbl_test(audio_file):
+    cheminFichier =   "Donc voilà le audio_file: [%s]" % audio_file
+    print(" Donc voilà le audio: [%s]", audio_file)
+    testFIchier = '/c/Users/Utilisateur/AppData/Local/Temp/gradio/f4d2ba5e63db118ad186d35d1aa2b50ffe8325422d9e5e4963c93eb66a373e94/audio.wav'
+    resultat = transcribe_audio(testFIchier)
+    return "%s is %s" % (cheminFichier, resultat)
 #function to transcribe audio to text using whisper
 def transcribe_audio(audio_file):
     model = whisper.load_model("base")
+    print (" POKUS the  is %s", audio_file)
     audio = whisper.load_audio(audio_file,sr=16000)
     audio_tensor = torch.from_numpy(audio).to(torch.float32)
     result = model.transcribe(audio_tensor, fp16=False)['text']
@@ -42,7 +48,8 @@ def match_task(text, audio):
 
 #function to generate phrases for the user
 def llm(task, country, number):
-    llm = Ollama(model="mistral")
+    # llm = Ollama(model="mistral")
+    llm = Ollama(model="mistral:7b", base_url='http://192.168.1.13:11434')
     lang = get_language(country, file="utils/country_to_language.json")
     few_shot = get_examples(file="utils/fewshot_learning.txt")
     context = f"You are a helpful assistant. You give an enumerated list of phrases. You answer concisely and only in {lang}."
@@ -66,6 +73,7 @@ def main():
                 text = gr.Textbox(label="Enter text", placeholder="order food, ask for directions, etc.")
             with gr.Column():
                 audio = gr.Audio(sources=["microphone"], label="Record your voice", type="filepath", max_length=10) 
+                print(" DOnc voilà le audio: [%s]", audio)
         # create a row with two blocks
         with gr.Row():
             country = gr.Radio(["France", "Germany", "Italy", "Spain"], label="Location", info="Where are you travelling?")
@@ -80,9 +88,13 @@ def main():
         with gr.Row():
             out = gr.Textbox(label="Response")
             task = match_task(text, audio)
-        response.click(fn=llm, inputs=[task, country, num], outputs=out) 
+
+        
+        response.click(fn=jbl_test, inputs=[audio], outputs=out)
+        # response.click(fn=llm, inputs=[task, country, num], outputs=out) 
+        # response.click(fn=transcribe_audio, inputs=[audio], outputs=out) 
         # gr.ClearButton.add(clear, [text, audio, country, num, out])   
-    demo.launch(share=False, debug=True, server_name='0.0.0.0')
+    demo.launch(share=False, debug=True)
 
 
 if __name__ == '__main__':
