@@ -31,6 +31,7 @@ def jbl_test(audio_file):
     audio = whisper.load_audio(audio_file,sr=16000)
     audio_tensor = torch.from_numpy(audio).to(torch.float32)
     result = model.transcribe(audio_tensor, fp16=False)['text']
+    print (" POKUS in jbl_test before returning the transcribed text: the transcribed text is %s", result)
     return result
 #function to transcribe audio to text using whisper
 def transcribe_audio(audio_file):
@@ -80,7 +81,7 @@ def main():
             with gr.Column():
                 text = gr.Textbox(label="Enter text", placeholder="order food, ask for directions, etc.")
             with gr.Column():
-                audio = gr.Audio(sources=["microphone"], label="Record your voice", type="filepath", max_length=10) 
+                audio = gr.Audio(sources=["microphone"], label="Record your voice", type="filepath", max_length=300) 
                 print("GR COLUMN - DOnc voilà le audio: [%s]", audio)
         # create a row with two blocks
         with gr.Row():
