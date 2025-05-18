@@ -73,7 +73,7 @@ RUN pip install torch torchvision torchaudio --index-url https://download.pytorc
 # ---
 # Install Whisper
 # RUN pip install git+https://github.com/openai/whisper.git
-# RUN pip install -U openai-whisper
+RUN pip install -U openai-whisper gradio
 # SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install openai-whisper"]
 # RUN pip install openai-whisper
 # ---
