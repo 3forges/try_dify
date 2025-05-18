@@ -94,7 +94,7 @@ def main():
         # response.click(fn=llm, inputs=[task, country, num], outputs=out) 
         # response.click(fn=transcribe_audio, inputs=[audio], outputs=out) 
         # gr.ClearButton.add(clear, [text, audio, country, num, out])   
-    demo.launch(share=False, debug=True)
+    demo.launch(share=False, debug=True, server_name='0.0.0.0')
 
 
 if __name__ == '__main__':
