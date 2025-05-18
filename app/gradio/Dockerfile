@@ -77,6 +77,6 @@ SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install gradio"]
 
 EXPOSE 7860
 COPY entrypoint.sh /tolt/app/
-RUN chmod +x /tolt/app/entrypoint.sh
+# RUN chmod +x /tolt/app/entrypoint.sh
 # CMD [ "python", "VoyageVocab.py" ]
 ENTRYPOINT ["/bin/bash", "-c", "/tolt/app/entrypoint.sh"]
