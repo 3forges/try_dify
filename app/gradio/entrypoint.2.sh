@@ -29,5 +29,6 @@ conda --version
 #   python VoyageVocab.py'
 # conda run -n tolt_env /bin/bash -c '/tolt/app/install.py.dependencies.sh'
 # conda run -n tolt_env /bin/bash -c 'python VoyageVocab.py'
+conda activate tolt_env
 python VoyageVocab.py
 # python VoyageVocab.py
