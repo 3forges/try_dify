@@ -29,6 +29,9 @@ COPY environment.yml /tolt/app/
 USER root
 COPY entrypoint.sh /tolt/app/
 RUN chmod a+x /tolt/app/entrypoint.sh
+COPY install.py.dependencies.sh /tolt/app/
+RUN chmod a+x /tolt/app/install.py.dependencies.sh
+
 USER $NEW_LX_USER_NAME
 
 WORKDIR /tolt/app
@@ -60,15 +63,12 @@ SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c"]
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     pip -V
 
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    python --version && pip -V
-
-
 
 # ---
-# That's for CPU, not CUDA, not ROCm
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
+# Install Dependencies
+SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","/tolt/app/install.py.dependencies.sh"]
+# RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+#     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
@@ -76,9 +76,9 @@ RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 # ---
 # Install Whisper
 # RUN pip install git+https://github.com/openai/whisper.git
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    pip install -U openai-whisper gradio
-# SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install openai-whisper"]
+# RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+#     pip install -U openai-whisper gradio
+# SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install openai-whisper gradio"]
 # RUN pip install openai-whisper
 # ---
 
