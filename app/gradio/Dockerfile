@@ -78,4 +78,4 @@ SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install gradio"]
 EXPOSE 7860
 
 # CMD [ "python", "VoyageVocab.py" ]
-ENTRYPOINT ["conda", "run", "--no-capture-output", "-n", "tolt_env", "python", "VoyageVocab.py"]
+ENTRYPOINT ["/bin/bash", "-c", "conda", "run", "--no-capture-output", "-n", "tolt_env", "python", "VoyageVocab.py"]

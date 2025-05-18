@@ -63,3 +63,21 @@ My only question is there: what is YARL in URL python package?
 
 * in `files = {"file": open(audio_file_path, 'rb')}` , the `rb` means _read binary_.
 * 
+
+
+
+## Run with Docker
+
+```bash
+docker build -t tolt/whisper:0.0.1 .
+```
+
+```bash
+docker run --name VoyageVocab \
+  --restart unless-stopped \
+  -itd -p 0.0.0.0:7860:7860 \
+  tolt/whisper:0.0.1
+
+docker stop VoyageVocab && docker rm VoyageVocab
+
+```
