@@ -65,7 +65,7 @@ SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c"]
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     pip -V
 
-
+# RUN apt-get install -y git
 # ---
 # Install Dependencies
 SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","/tolt/app/install.py.dependencies.sh"]

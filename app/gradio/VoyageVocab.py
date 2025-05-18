@@ -81,7 +81,7 @@ def main():
             out = gr.Textbox(label="Response")
             task = match_task(text, audio)
         response.click(fn=llm, inputs=[task, country, num], outputs=out) 
-        gr.ClearButton.add(clear, [text, audio, country, num, out])   
+        # gr.ClearButton.add(clear, [text, audio, country, num, out])   
     demo.launch(share=False, debug=True, server_name='0.0.0.0')
 
 
