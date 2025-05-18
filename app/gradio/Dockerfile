@@ -79,4 +79,4 @@ EXPOSE 7860
 COPY entrypoint.sh /tolt/app/
 RUN chmod +x /tolt/app/entrypoint.sh
 # CMD [ "python", "VoyageVocab.py" ]
-ENTRYPOINT ["/tolt/app/entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "-c", "/tolt/app/entrypoint.sh"]
