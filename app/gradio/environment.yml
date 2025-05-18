@@ -2,10 +2,10 @@ name: tolt_env
 channels:
   - conda-forge
 dependencies:
-  # - openai-whisper # openai-whisper doesn't exist in conda-forge
-  - langchain
   - langchain-community
-  - gradio
+  # - openai-whisper # openai-whisper doesn't exist in conda-forge
+#   - langchain
+#   - gradio
 # dependencies:
 #   - python=3.8
 #   - flask
