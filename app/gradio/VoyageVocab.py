@@ -23,8 +23,14 @@ def jbl_test(audio_file):
     print(" Donc voilà le audio: [%s]", audio_file)
     # testFIchier = '/c/Users/Utilisateur/AppData/Local/Temp/gradio/f4d2ba5e63db118ad186d35d1aa2b50ffe8325422d9e5e4963c93eb66a373e94/audio.wav'
     # resultat = transcribe_audio(testFIchier)
-    resultat = transcribe_audio(audio_file)
-    return "%s is %s" % (cheminFichier, resultat)
+    # resultat = transcribe_audio(audio_file)
+    # return "%s is %s" % (cheminFichier, resultat)
+    model = whisper.load_model("base")
+    print (" POKUS in jbl_test the  is %s", audio_file)
+    audio = whisper.load_audio(audio_file,sr=16000)
+    audio_tensor = torch.from_numpy(audio).to(torch.float32)
+    result = model.transcribe(audio_tensor, fp16=False)['text']
+    return result
 #function to transcribe audio to text using whisper
 def transcribe_audio(audio_file):
     model = whisper.load_model("base")
