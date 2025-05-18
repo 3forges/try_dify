@@ -100,7 +100,13 @@ docker exec -u root VoyageVocab bash -c 'rm /tolt/app/VoyageVocab.py'
 docker cp ./VoyageVocab.py VoyageVocab:/tolt/app/
 docker exec -u root VoyageVocab bash -c 'chown tolt:tolteques -R /tolt/app/'
 
-docker exec -u root VoyageVocab bash -c 'chown tolt:tolteques -R /tolt/app/'
+docker exec -u root VoyageVocab bash -c 'ls -alh /tolt/app/'
+
+docker restart VoyageVocab
+
+docker logs -f VoyageVocab
+
+
 ```
 
 
