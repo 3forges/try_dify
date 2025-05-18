@@ -40,8 +40,10 @@ WORKDIR /tolt/app
 RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
     conda env create -f environment.yml
 
+RUN echo 'export PATH="\$PATH:\$HOME/anaconda3/bin"' | tee -a /home/$NEW_LX_USER_NAME
 # Make next RUN commands use the new environment:
 SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c"]
+
 
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     conda init bash
