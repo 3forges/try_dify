@@ -34,7 +34,7 @@ RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
     conda init bash
 
-RUN echo "export PATH='\$PATH:\$HOME/anaconda3/bin' && conda activate tolt_env" > ~/.bashrc
+RUN echo "export PATH=\"\$PATH:\$HOME/anaconda3/bin\" && conda activate tolt_env" > ~/.bashrc
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     conda activate tolt_env
 
