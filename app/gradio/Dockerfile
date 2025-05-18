@@ -68,7 +68,7 @@ SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c"]
 # RUN apt-get install -y git
 # ---
 # Install Dependencies
-SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","/tolt/app/install.py.dependencies.sh"]
+# SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","/tolt/app/install.py.dependencies.sh"]
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
