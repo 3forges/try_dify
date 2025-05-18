@@ -26,15 +26,24 @@ RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 
 COPY VoyageVocab.py /tolt/app/
 COPY environment.yml /tolt/app/
+USER root
+COPY entrypoint.sh /tolt/app/
+RUN chmod a+x /tolt/app/entrypoint.sh
+USER $NEW_LX_USER_NAME
+
 WORKDIR /tolt/app
+
 
 RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
     conda env create -f environment.yml
 
-RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-    conda init bash
+# Make next RUN commands use the new environment:
+SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c"]
 
-RUN echo "export PATH=\"\$PATH:\$HOME/anaconda3/bin\" && conda activate tolt_env" > ~/.bashrc
+# RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
+#     conda init bash
+
+# RUN echo "export PATH=\"\$PATH:\$HOME/anaconda3/bin\" && conda activate tolt_env" > ~/.bashrc
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     conda activate tolt_env
 
@@ -45,18 +54,18 @@ RUN echo "export PATH=\"\$PATH:\$HOME/anaconda3/bin\" && conda activate tolt_env
 
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     bash -c 'echo "check in conda activated env: " && source ~/.bashrc && conda --version && python --version && pip -V'
-SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","conda --version && python --version && pip -V"]
+# SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","conda --version && python --version && pip -V"]
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     python --version
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     pip -V
-
+RUN python --version && pip -V
 
 
 
 # ---
 # That's for CPU, not CUDA, not ROCm
-SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu"]
+RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
@@ -65,20 +74,16 @@ SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install torch to
 # Install Whisper
 # RUN pip install git+https://github.com/openai/whisper.git
 # RUN pip install -U openai-whisper
-SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install openai-whisper"]
-# RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
-#     pip install openai-whisper
+# SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install openai-whisper"]
+# RUN pip install openai-whisper
 # ---
 
-SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install gradio"]
+# SHELL ["conda", "run", "-n", "tolt_env", "/bin/bash", "-c","pip install gradio"]
 # RUN export PATH="$PATH:$HOME/anaconda3/bin" && \
 #     pip install gradio
 
 
 EXPOSE 7860
-USER root
-COPY entrypoint.sh /tolt/app/
-RUN chmod a+x /tolt/app/entrypoint.sh
 USER $NEW_LX_USER_NAME
 # CMD [ "python", "VoyageVocab.py" ]
 # ENTRYPOINT ["/bin/bash", "-c", "chmod a+x /tolt/app/entrypoint.sh && /tolt/app/entrypoint.sh"]
