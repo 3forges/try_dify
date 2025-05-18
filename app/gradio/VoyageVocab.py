@@ -21,8 +21,9 @@ def get_examples(file):
 def jbl_test(audio_file):
     cheminFichier =   "Donc voilà le audio_file: [%s]" % audio_file
     print(" Donc voilà le audio: [%s]", audio_file)
-    testFIchier = '/c/Users/Utilisateur/AppData/Local/Temp/gradio/f4d2ba5e63db118ad186d35d1aa2b50ffe8325422d9e5e4963c93eb66a373e94/audio.wav'
-    resultat = transcribe_audio(testFIchier)
+    # testFIchier = '/c/Users/Utilisateur/AppData/Local/Temp/gradio/f4d2ba5e63db118ad186d35d1aa2b50ffe8325422d9e5e4963c93eb66a373e94/audio.wav'
+    # resultat = transcribe_audio(testFIchier)
+    resultat = transcribe_audio(audio_file)
     return "%s is %s" % (cheminFichier, resultat)
 #function to transcribe audio to text using whisper
 def transcribe_audio(audio_file):
@@ -73,7 +74,7 @@ def main():
                 text = gr.Textbox(label="Enter text", placeholder="order food, ask for directions, etc.")
             with gr.Column():
                 audio = gr.Audio(sources=["microphone"], label="Record your voice", type="filepath", max_length=10) 
-                print(" DOnc voilà le audio: [%s]", audio)
+                print("GR COLUMN - DOnc voilà le audio: [%s]", audio)
         # create a row with two blocks
         with gr.Row():
             country = gr.Radio(["France", "Germany", "Italy", "Spain"], label="Location", info="Where are you travelling?")
