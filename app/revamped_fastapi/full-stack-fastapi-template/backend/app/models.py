@@ -1,8 +1,11 @@
+import datetime
+from typing import Optional
 import uuid
 
 from pydantic import EmailStr
-from sqlmodel import Field, Relationship, SQLModel
-
+from sqlalchemy import DateTime, func
+from sqlmodel import SQLModel, Column, Field, Relationship
+c
 
 # Shared properties
 class UserBase(SQLModel):
@@ -55,6 +58,11 @@ class UsersPublic(SQLModel):
     data: list[UserPublic]
     count: int
 
+###########################################
+###########################################
+### ITEMS
+###########################################
+###########################################
 
 # Shared properties
 class ItemBase(SQLModel):
@@ -91,6 +99,65 @@ class ItemPublic(ItemBase):
 class ItemsPublic(SQLModel):
     data: list[ItemPublic]
     count: int
+
+
+###########################################
+###########################################
+### CONTRIBUTIONS
+###########################################
+###########################################
+
+# Shared properties
+class ContributionBase(SQLModel):
+    idea_text: str = Field(min_length=1, max_length=510)
+
+
+# Properties to receive on contribution creation
+class ContributionCreate(ContributionBase):
+    pass
+
+
+# Properties to receive on contribution update
+class ContributionUpdate(ContributionBase):
+    idea_text: str | None = Field(default=None, min_length=1, max_length=510)  # type: ignore
+
+
+# Database model, database table inferred from class name
+class Contribution(ContributionBase, table=True):
+    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
+    idea_text: str = Field(max_length=510)
+    created_at: datetime.datetime = Field(
+        # default_factory=datetime.datetime.utcnow,
+        default_factory=datetime.datetime.now,
+    )
+    updated_at: Optional[datetime.datetime] = Field(
+        # sa_column=Column(DateTime(), onupdate=datetime.datetime.now)
+        sa_column=Column(DateTime(), onupdate=func.now())
+        
+    )
+    owner_id: uuid.UUID = Field(
+        foreign_key="user.id", nullable=False, ondelete="CASCADE"
+    )
+    owner: User | None = Relationship(back_populates="contributions")
+
+
+# Properties to return via API, id is always required
+class ContributionPublic(ContributionBase):
+    id: uuid.UUID
+    owner_id: uuid.UUID
+
+
+class ContributionsPublic(SQLModel):
+    data: list[ContributionPublic]
+    count: int
+
+
+###########################################
+###########################################
+### END  OF CONTRIBUTIONS
+###########################################
+###########################################
+
 
 
 # Generic message
