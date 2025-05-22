@@ -13,9 +13,7 @@ from app.api.deps import (
 from app.core.config import settings
 from app.core.security import get_password_hash, verify_password
 from app.models import (
-    Item,
     Message,
-    UpdatePassword,
     Contribution,
     ContributionCreate,
     ContributionPublic,
@@ -48,12 +46,16 @@ def read_contributions(session: SessionDep, current_user: CurrentUser, skip: int
 
 @router.get("/{contribution_id}", response_model=ContributionPublic)
 def read_contribution_by_id(
-    contribution_id: uuid.UUID, session: SessionDep
+    contribution_id: uuid.UUID, session: SessionDep, current_user: CurrentUser,
 ) -> Any:
     """
     Get a specific contribution by id.
     """
     contribution = crud.get_contribution_by_id(session=session, id=contribution_id)# session.get(Contribution, contribution_id)
+    if not contribution:
+        raise HTTPException(status_code=404, detail="Contribution not found")
+    if not current_user.is_superuser and (item.owner_id != current_user.id):
+        raise HTTPException(status_code=400, detail="Not enough permissions to access Contribution")
     return contribution
 
 
@@ -64,16 +66,17 @@ def create_contribution(*, session: SessionDep, current_user: CurrentUser, contr
     """
     Create new contribution.
     """
-
     contribution = crud.create_contribution(session=session, contribution_in=contribution_in, owner_id=current_user.id) # def create_contribution(*, session: Session, contribution_in: ContributionCreate, owner_id: uuid.UUID) -> Contribution:
     return contribution
 
 @router.delete("/{contribution_to_delete_id}", response_model=Message)
-def delete_contribution(session: SessionDep, contribution_to_delete_id: uuid.UUID,) -> Any:
+def delete_contribution(session: SessionDep, contribution_to_delete_id: uuid.UUID, current_user: CurrentUser) -> Any:
     """
     Delete contribution.
     """
     existing_contribution = crud.get_contribution_by_id(session=session, contribution_id=contribution_to_delete_id) # def get_contribution_by_id(*, session: Session, contribution_id: uuid.UUID) -> User | None:
+    if not current_user.is_superuser and (item.owner_id != current_user.id):
+        raise HTTPException(status_code=400, detail="Not enough permissions to delete this Contribution")
     if existing_contribution:
         session.delete(existing_contribution)
         session.commit()
@@ -93,16 +96,19 @@ def update_contribution(
     session: SessionDep,
     contribution_id: uuid.UUID,
     contribution_in: ContributionUpdate,
+    current_user: CurrentUser
 ) -> Any:
     """
     Update a contribution.
     """
 
     db_contribution = session.get(Contribution, contribution_id)
+    if not current_user.is_superuser and (item.owner_id != current_user.id):
+        raise HTTPException(status_code=403, detail="Not enough permissions to update this Contribution")
     if not db_contribution:
         raise HTTPException(
             status_code=404,
-            detail="The contribution with this id does not exist in the system",
+            detail=("ERROR Updating Contribution - The contribution with this id : [%s] does not exist in the system", contribution_id),
         )
     db_contribution = crud.update_contribution(session=session, db_contribution=db_contribution, contribution_in=contribution_in) # def update_contribution(*, session: Session, db_contribution: Contribution, contribution_in: ContributionUpdate) -> Any:
     return db_contribution

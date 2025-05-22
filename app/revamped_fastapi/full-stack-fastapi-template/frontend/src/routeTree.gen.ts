@@ -20,6 +20,7 @@ import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
+import { Route as LayoutSpeakoutImport } from './routes/_layout/speakout'
 
 // Create/Update Routes
 
@@ -37,6 +38,9 @@ const RecoverPasswordRoute = RecoverPasswordImport.update({
   path: '/recover-password',
   getParentRoute: () => rootRoute,
 } as any)
+
+
+
 
 const LoginRoute = LoginImport.update({
   path: '/login',
@@ -60,6 +64,11 @@ const LayoutSettingsRoute = LayoutSettingsImport.update({
 
 const LayoutItemsRoute = LayoutItemsImport.update({
   path: '/items',
+  getParentRoute: () => LayoutRoute,
+} as any)
+
+const LayoutSpeakoutRoute = LayoutSpeakoutImport.update({
+  path: '/speakout',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -100,6 +109,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutItemsImport
       parentRoute: typeof LayoutImport
     }
+    '/_layout/speakout': {
+      preLoaderRoute: typeof LayoutSpeakoutRoute
+      parentRoute: typeof LayoutImport
+    }
     '/_layout/settings': {
       preLoaderRoute: typeof LayoutSettingsImport
       parentRoute: typeof LayoutImport
@@ -117,6 +130,7 @@ export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
     LayoutAdminRoute,
     LayoutItemsRoute,
+    LayoutSpeakoutRoute,
     LayoutSettingsRoute,
     LayoutIndexRoute,
   ]),

@@ -21,6 +21,10 @@ dependencies = [
     "pydantic-settings<3.0.0,>=2.2.1",
     "sentry-sdk[fastapi]<2.0.0,>=1.40.6",
     "pyjwt<3.0.0,>=2.8.0",
+    "torch=2.7.0+cpu",
+    "torchaudio=2.7.0+cpu",
+    "torchvision=0.22.0+cpu",
+    "openai-whisper"
 ]
 
 [tool.uv]
@@ -66,3 +70,11 @@ ignore = [
 [tool.ruff.lint.pyupgrade]
 # Preserve types, even if a file imports `from __future__ import annotations`.
 keep-runtime-typing = true
+
+[tool.uv.pip]
+# https://docs.astral.sh/uv/reference/settings/#pip_torch-backend
+# torch-backend = "auto"
+torch-backend = "cpu"
+
+[tool.uv.sources]
+openai-whisper = { git = "https://github.com/openai/whisper.git", tag = "v20240930" }

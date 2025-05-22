@@ -3,6 +3,9 @@
 set -e
 set -x
 
+chmod +x ./prestart_whisper.sh
+./prestart_whisper.sh
+
 # Let the DB start
 python app/backend_pre_start.py
 

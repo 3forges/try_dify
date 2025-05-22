@@ -9,3 +9,5 @@ pip install git+https://github.com/openai/whisper.git
 
 
 pip install gradio langchain langchain-community
+
+# https://github.com/astral-sh/uv/issues/4173#issuecomment-2156715078
