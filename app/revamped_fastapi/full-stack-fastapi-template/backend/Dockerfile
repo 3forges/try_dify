@@ -32,7 +32,6 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 ENV PYTHONPATH=/app
 
 COPY ./scripts /app/scripts
-
 COPY ./pyproject.toml ./uv.lock ./alembic.ini /app/
 
 COPY ./app /app/app
@@ -42,6 +41,8 @@ COPY ./app /app/app
 # RUN --mount=type=cache,target=/root/.cache/uv \
 #     uv sync --torch-backend=cpu
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync
+uv sync
 
-CMD ["fastapi", "run", "--workers", "4", "app/main.py"]
+RUN chmod a+x /app/scripts/entrypoint.sh
+# CMD ["fastapi", "run", "--workers", "4", "app/main.py"]
+CMD ["/app/scripts/entrypoint.sh"]
