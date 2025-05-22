@@ -38,6 +38,6 @@ COPY ./app /app/app
 # Sync the project
 # Ref: https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync
+    uv sync --torch-backend=cpu
 
 CMD ["fastapi", "run", "--workers", "4", "app/main.py"]

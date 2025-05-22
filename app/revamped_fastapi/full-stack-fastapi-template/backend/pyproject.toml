@@ -74,7 +74,7 @@ keep-runtime-typing = true
 [tool.uv.pip]
 # https://docs.astral.sh/uv/reference/settings/#pip_torch-backend
 # torch-backend = "auto"
-torch-backend = "cpu"
+# torch-backend = "cpu"
 
 [tool.uv.sources]
 openai-whisper = { git = "https://github.com/openai/whisper.git", tag = "v20240930" }
