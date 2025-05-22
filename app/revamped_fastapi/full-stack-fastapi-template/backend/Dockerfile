@@ -41,7 +41,7 @@ COPY ./app /app/app
 # RUN --mount=type=cache,target=/root/.cache/uv \
 #     uv sync --torch-backend=cpu
 RUN --mount=type=cache,target=/root/.cache/uv \
-uv sync
+    uv sync
 
 RUN chmod a+x /app/scripts/entrypoint.sh
 # CMD ["fastapi", "run", "--workers", "4", "app/main.py"]
