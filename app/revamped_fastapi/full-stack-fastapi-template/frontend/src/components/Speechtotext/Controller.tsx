@@ -34,7 +34,7 @@ const Controller = (): React.JSX.Element => {
 
         // send form data to api endpoint
         await axios
-          .post("http://localhost:8000/post-audio", formData, {
+          .post("http://mongo.pesto.io:5173/transcribe", formData, {
             headers: {
               "Content-Type": "audio/mpeg",
             },
