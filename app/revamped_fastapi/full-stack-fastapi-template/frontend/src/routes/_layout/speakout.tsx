@@ -1,15 +1,15 @@
-import { useState } from "react";
+// import { useState } from "react";
 import Controller from "./../../components/Speechtotext/Controller";
 // import React from "react";
 import * as React from "react"
-import { createFileRoute, useNavigate } from "@tanstack/react-router"
+import { createFileRoute } from "@tanstack/react-router"
 
 export const Route = createFileRoute("/_layout/settings")({
   component: Speakout,
 })
 
-function Speakout() {
-  const [count, setCount] = useState(0);
+function Speakout(): React.JSX.Element {
+  //const [count, setCount] = useState(0);
 
   return (
     <div>
