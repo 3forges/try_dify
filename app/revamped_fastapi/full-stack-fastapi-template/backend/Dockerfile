@@ -6,6 +6,7 @@ WORKDIR /app/
 
 # Install uv
 # Ref: https://docs.astral.sh/uv/guides/integration/docker/#installing-uv
+# Ref: https://github.com/astral-sh/uv/pkgs/container/uv
 # COPY --from=ghcr.io/astral-sh/uv:0.5.11 /uv /uvx /bin/
 COPY --from=ghcr.io/astral-sh/uv:0.7.6 /uv /uvx /bin/
 
