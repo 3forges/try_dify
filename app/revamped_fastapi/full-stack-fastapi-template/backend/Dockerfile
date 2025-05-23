@@ -1,7 +1,10 @@
-FROM python:3.10
+# FROM python:3.10
+FROM bitnami/python:3.13.3-debian-12-r13
 
 ENV PYTHONUNBUFFERED=1
 
+RUN apt-get update -y && apt-get install -y ffmpeg
+RUN mkdir -p /app
 WORKDIR /app/
 
 # Install uv
