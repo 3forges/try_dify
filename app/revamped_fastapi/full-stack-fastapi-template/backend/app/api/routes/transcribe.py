@@ -38,14 +38,14 @@ async def transcribe_audio(audio: UploadFile = File(...)):
     # Convert audio to text - production
     # Save the audio file temporarily
     # create a temporary directory using the context manager
-    tmpdirname = tempfile.TemporaryDirectory()
+    tmpdir = tempfile.TemporaryDirectory()
     # with tempfile.TemporaryDirectory() as tmpdirname:
     #     print('created temporary directory', tmpdirname)
     #     with open(f"{tmpdirname}/{audio.filename}", "wb") as buffer:
     #         buffer.write(audio.file.read())
     # # directory and contents have been removed
 
-    with open(f"{tmpdirname}/{audio.filename}", "wb") as buffer:
+    with open(f"{tmpdir.name}/{audio.filename}", "wb") as buffer:
         buffer.write(audio.file.read())
     # audio_input = open(audio.filename, "rb")
     # audio_input_as_bytes = await audio.file.read()
@@ -54,7 +54,7 @@ async def transcribe_audio(audio: UploadFile = File(...)):
     # Decode audio : donc là c'est là que j'appellerais mon composant whisper
     # transcribed_text_result = whisper_service.transcribe(audio_input)
     # transcribed_text_result = whisper_service.transcribe(audio_input_as_bytes)
-    transcribed_text_result = whisper_service.transcribe(f"{tmpdirname}/{audio.filename}")
+    transcribed_text_result = whisper_service.transcribe(f"{tmpdir.name}/{audio.filename}")
     
     
     # Guard: Ensure output
