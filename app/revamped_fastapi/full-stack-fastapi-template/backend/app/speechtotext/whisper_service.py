@@ -28,11 +28,11 @@ class WhisperService:
         # return "%s is %s" % (cheminFichier, resultat)
         # model = whisper.load_model("base")
         model = self.get_model()
-        print (" WhisperService/transcribe(self, audio_file) - the audio file is %s", audio_file)
+        print (f" WhisperService/transcribe(self, audio_file) - the audio_file is {audio_file}")
         audio = whisper.load_audio(audio_file,sr=16000)
         audio_tensor = torch.from_numpy(audio).to(torch.float32)
         result = model.transcribe(audio_tensor, fp16=False)['text']
-        print (" WhisperService/transcribe(self, audio_file) - before returning the transcribed text: the transcribed text is %s", result)
+        print (f" WhisperService/transcribe(self, audio_file) - before returning the transcribed text: the transcribed text is [{result}]")
         return result
 # whisper_model = WhisperService(str(settings.WHISPER_MODEL_NAME)).get_model()
 whisper_service = WhisperService(settings.WHISPER_MODEL_NAME)

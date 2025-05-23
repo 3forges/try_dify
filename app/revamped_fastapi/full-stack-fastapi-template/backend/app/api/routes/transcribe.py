@@ -49,13 +49,14 @@ async def transcribe_audio(audio: UploadFile = File(...)):
         buffer.write(audio.file.read())
     # audio_input = open(audio.filename, "rb")
     # audio_input_as_bytes = await audio.file.read()
-    
-
+    print(f"TOLT APP - Endpoint  /api/v1/transcribe/ - will call : whisper_service.transcribe({tmpdir.name}/{audio.filename}) ")
+    logger.info(f"TOLT APP - Endpoint  /api/v1/transcribe/ - will call : whisper_service.transcribe({tmpdir.name}/{audio.filename}) ")
     # Decode audio : donc là c'est là que j'appellerais mon composant whisper
     # transcribed_text_result = whisper_service.transcribe(audio_input)
     # transcribed_text_result = whisper_service.transcribe(audio_input_as_bytes)
     transcribed_text_result = whisper_service.transcribe(f"{tmpdir.name}/{audio.filename}")
-    
+    print(f"TOLT APP - Endpoint  /api/v1/transcribe/ - whisper_service.transcribe({tmpdir.name}/{audio.filename}) RETURNED transcribed_text_result=[{transcribed_text_result}]")
+    logger.info(f"TOLT APP - Endpoint  /api/v1/transcribe/ - whisper_service.transcribe({tmpdir.name}/{audio.filename}) RETURNED transcribed_text_result=[{transcribed_text_result}]")
     
     # Guard: Ensure output
     if not transcribed_text_result:
