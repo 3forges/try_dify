@@ -71,7 +71,7 @@ const Controller = (): React.JSX.Element => {
       .then(async (blob) => {
         // Construct audio to send file
         const formData = new FormData();
-        formData.append("file", blob, "myVoiceFile.wav");
+        formData.append("audio", blob, "myVoiceFile.wav");
         
         // let response = await fetch( "http://localhost:8000/api/v1/transcribe/", 
         /*
