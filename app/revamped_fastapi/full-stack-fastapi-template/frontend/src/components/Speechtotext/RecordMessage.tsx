@@ -2,7 +2,7 @@ import { ReactMediaRecorder } from "react-media-recorder";
 
 // import React from "react";
 import * as React from "react"
-import { FiMic } from "react-icons/fi"
+import { FiMic as Microphone } from "react-icons/fi"
 import { Button, HStack } from "@chakra-ui/react"
 
 type Props = {
@@ -25,7 +25,7 @@ const RecordMessage = ({ handleStop }: Props): React.JSX.Element => {
               onMouseDown={startRecording}
               onMouseUp={stopRecording}
             >
-              <FiMic /> {status}
+              <Microphone /> {status}
             </Button>
           </HStack>
         </div>

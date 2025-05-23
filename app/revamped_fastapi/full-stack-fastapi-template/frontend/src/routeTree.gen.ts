@@ -16,11 +16,11 @@ import { Route as ResetPasswordImport } from './routes/reset-password'
 import { Route as RecoverPasswordImport } from './routes/recover-password'
 import { Route as LoginImport } from './routes/login'
 import { Route as LayoutImport } from './routes/_layout'
+import { Route as LayoutSpeakoutImport } from './routes/_layout/speakout'
 import { Route as LayoutIndexImport } from './routes/_layout/index'
 import { Route as LayoutSettingsImport } from './routes/_layout/settings'
 import { Route as LayoutItemsImport } from './routes/_layout/items'
 import { Route as LayoutAdminImport } from './routes/_layout/admin'
-import { Route as LayoutSpeakoutImport } from './routes/_layout/speakout'
 
 // Create/Update Routes
 
@@ -39,9 +39,6 @@ const RecoverPasswordRoute = RecoverPasswordImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-
-
-
 const LoginRoute = LoginImport.update({
   path: '/login',
   getParentRoute: () => rootRoute,
@@ -50,6 +47,11 @@ const LoginRoute = LoginImport.update({
 const LayoutRoute = LayoutImport.update({
   id: '/_layout',
   getParentRoute: () => rootRoute,
+} as any)
+
+const LayoutSpeakoutRoute = LayoutSpeakoutImport.update({
+  path: '/speakout',
+  getParentRoute: () => LayoutRoute,
 } as any)
 
 const LayoutIndexRoute = LayoutIndexImport.update({
@@ -64,11 +66,6 @@ const LayoutSettingsRoute = LayoutSettingsImport.update({
 
 const LayoutItemsRoute = LayoutItemsImport.update({
   path: '/items',
-  getParentRoute: () => LayoutRoute,
-} as any)
-
-const LayoutSpeakoutRoute = LayoutSpeakoutImport.update({
-  path: '/speakout',
   getParentRoute: () => LayoutRoute,
 } as any)
 
@@ -109,16 +106,16 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutItemsImport
       parentRoute: typeof LayoutImport
     }
-    '/_layout/speakout': {
-      preLoaderRoute: typeof LayoutSpeakoutRoute
-      parentRoute: typeof LayoutImport
-    }
     '/_layout/settings': {
       preLoaderRoute: typeof LayoutSettingsImport
       parentRoute: typeof LayoutImport
     }
     '/_layout/': {
       preLoaderRoute: typeof LayoutIndexImport
+      parentRoute: typeof LayoutImport
+    }
+    '/_layout/speakout': {
+      preLoaderRoute: typeof LayoutSpeakoutImport
       parentRoute: typeof LayoutImport
     }
   }
@@ -130,9 +127,9 @@ export const routeTree = rootRoute.addChildren([
   LayoutRoute.addChildren([
     LayoutAdminRoute,
     LayoutItemsRoute,
-    LayoutSpeakoutRoute,
     LayoutSettingsRoute,
     LayoutIndexRoute,
+    LayoutSpeakoutRoute,
   ]),
   LoginRoute,
   RecoverPasswordRoute,

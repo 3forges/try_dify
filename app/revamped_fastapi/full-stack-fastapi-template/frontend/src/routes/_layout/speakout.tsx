@@ -4,7 +4,7 @@ import Controller from "./../../components/Speechtotext/Controller";
 import * as React from "react"
 import { createFileRoute } from "@tanstack/react-router"
 
-export const Route = createFileRoute("/_layout/settings")({
+export const Route = createFileRoute("/_layout/speakout")({
   component: Speakout,
 })
 
