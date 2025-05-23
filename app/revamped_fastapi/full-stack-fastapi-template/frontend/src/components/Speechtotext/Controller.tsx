@@ -78,7 +78,7 @@ const Controller = (): React.JSX.Element => {
           // .post("http://mongo.pesto.io:8000/api/v1/transcribe/", formData, {
             headers: {
               // "Content-Type": "audio/mpeg",
-              "Content-Type": "multipart/form-data; boundary=------------------------7e1169bfdffcca45",
+              // "Content-Type": "multipart/form-data; boundary=------------------------7e1169bfdffcca45",
             },
             // responseType: "arrayBuffer", // Set the response type to handle binary data
             responseType: "json",
