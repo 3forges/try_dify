@@ -1,7 +1,9 @@
 import { ReactMediaRecorder } from "react-media-recorder";
-import RecordIcon from "./RecordIcon";
+
 // import React from "react";
 import * as React from "react"
+import { FiMic } from "react-icons/fi"
+import { Button, HStack } from "@chakra-ui/react"
 
 type Props = {
   handleStop: any;
@@ -14,20 +16,18 @@ const RecordMessage = ({ handleStop }: Props): React.JSX.Element => {
       onStop={handleStop}
       render={({ status, startRecording, stopRecording }) => (
         <div className="mt-2">
-          <button
-            onMouseDown={startRecording}
-            onMouseUp={stopRecording}
-            className="bg-white p-4 rounded-full"
-          >
-            <RecordIcon
-              classText={
-                status == "recording"
-                  ? "animate-pulse text-red-500"
-                  : "text-sky-500"
-              }
-            />
-          </button>
-          <p className="mt-2 text-white font-light">{status}</p>
+
+
+          <HStack>
+            <Button
+              colorPalette="teal"
+              variant="solid"
+              onMouseDown={startRecording}
+              onMouseUp={stopRecording}
+            >
+              <FiMic /> {status}
+            </Button>
+          </HStack>
         </div>
       )}
     />
