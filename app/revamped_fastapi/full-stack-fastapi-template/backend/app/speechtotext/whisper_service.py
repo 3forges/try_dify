@@ -9,8 +9,8 @@ from whisper import Whisper
 class WhisperService:
     """The loaded Whisper Model used to transcribe speech to text"""
     
-    whisper_model_name = Literal["tiny.fr", "base.fr", "small.fr", "medium.fr", "tiny.en", "base.en", "small.en", "medium.en", "tiny", "base", "small", "medium", "large", "turbo"] = "medium"
-    whisper_model = None
+    whisper_model_name: Literal["tiny.fr", "base.fr", "small.fr", "medium.fr", "tiny.en", "base.en", "small.en", "medium.en", "tiny", "base", "small", "medium", "large", "turbo"] = "medium"
+    whisper_model: Whisper = None
     def __init__(self, model_name: Literal["tiny.fr", "base.fr", "small.fr", "medium.fr", "tiny.en", "base.en", "small.en", "medium.en", "tiny", "base", "small", "medium", "large", "turbo"]):
       self.whisper_model_name = model_name
     # def init_model(self):
