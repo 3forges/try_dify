@@ -48,13 +48,13 @@ async def transcribe_audio(audio: UploadFile = File(...)):
     with open(f"{tmpdirname}/{audio.filename}", "wb") as buffer:
         buffer.write(audio.file.read())
     # audio_input = open(audio.filename, "rb")
-    audio_input_as_bytes = await audio.file.read()
+    # audio_input_as_bytes = await audio.file.read()
     
 
     # Decode audio : donc là c'est là que j'appellerais mon composant whisper
     # transcribed_text_result = whisper_service.transcribe(audio_input)
-    transcribed_text_result = whisper_service.transcribe(audio_input_as_bytes)
-    # transcribed_text_result = whisper_service.transcribe(f"{tmpdirname}/{audio.filename}")
+    # transcribed_text_result = whisper_service.transcribe(audio_input_as_bytes)
+    transcribed_text_result = whisper_service.transcribe(f"{tmpdirname}/{audio.filename}")
     
     
     # Guard: Ensure output
