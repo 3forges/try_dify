@@ -1,6 +1,6 @@
 import { useState } from "react";
 // import Title from "./Title";
-import axios from "redaxios";
+// import axios from "redaxios";
 import RecordMessage from "./RecordMessage";
 // import React from "react";
 import * as React from "react"
@@ -71,14 +71,40 @@ const Controller = (): React.JSX.Element => {
         // Construct audio to send file
         const formData = new FormData();
         formData.append("file", blob, "myFile.wav");
+        
+        // let response = await fetch( "http://localhost:8000/api/v1/transcribe/", 
+        fetch( "http://localhost:8000/api/v1/transcribe/", 
+          { method: "post", 
+            body: formData, 
+            headers : 
+            { 'Content-Type' : 'multipart/form-data;' }
+          })
+          .then((res: any) => {
+            const transcribedMessage = res.data;
+            // const audio = new Audio();
+            // audio.src = createBlobURL(blob);
 
+            // Append to audio
+            const rachelMessage = { sender: "rachel", transcribedMessage: transcribedMessage };
+            messagesArr.push(rachelMessage);
+            setMessages(messagesArr);
+
+            // Play audio
+            setIsLoading(false);
+            // audio.play();
+          })
+          .catch((err: any) => {
+            console.error(err);
+            setIsLoading(false);
+          });
+          /*
         // send form data to api endpoint
         await axios
           .post("http://localhost:8000/api/v1/transcribe/", formData, {
           // .post("http://mongo.pesto.io:8000/api/v1/transcribe/", formData, {
             headers: {
               // "Content-Type": "audio/mpeg",
-              // "Content-Type": "multipart/form-data; boundary=------------------------7e1169bfdffcca45",
+              // "Content-Type": "multipart/form-data; boundary=------------------------7e1169bfdffcca45", // Simply don't set the Content-Type header manually and the browser will automatically set "multipart/form-data; boundary=..." value.
             },
             // responseType: "arrayBuffer", // Set the response type to handle binary data
             responseType: "json",
@@ -101,6 +127,7 @@ const Controller = (): React.JSX.Element => {
             console.error(err);
             setIsLoading(false);
           });
+          */
       });
   };
 
