@@ -76,8 +76,8 @@ const Controller = (): React.JSX.Element => {
         fetch( "http://localhost:8000/api/v1/transcribe/", 
           { method: "post", 
             body: formData, 
-            headers : 
-            { 'Content-Type' : 'multipart/form-data;' }
+            // headers : 
+            // { 'Content-Type' : 'multipart/form-data;' }
           })
           .then((res: any) => {
             const transcribedMessage = res.data;
