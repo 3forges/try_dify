@@ -1,5 +1,5 @@
-# FROM python:3.10
-FROM bitnami/python:3.13.3-debian-12-r13
+FROM python:3.10
+# FROM bitnami/python:3.13.3-debian-12-r13
 
 ENV PYTHONUNBUFFERED=1
 
