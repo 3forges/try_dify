@@ -26,6 +26,10 @@ router = APIRouter(prefix="/transcribe", tags=["transcribe"])
 
 # Very good example fast api and audio files:
 # https://github.com/fastapi/fastapi/issues/5278
+# https://medium.com/django-unleashed/creating-an-api-with-fastapi-to-transcribe-summarize-and-tag-audio-files-using-fasterwhisper-and-e9671206ddd2
+# --
+# wow it works: 
+# curl -ivvv -H 'Content-Type: multipart/form-data' -F 'audio=@./file_example_WAV_1MG.wav' -X POST http://localhost:8000/api/v1/transcribe/ | tail -n 1 | jq .
 @router.post("/")
 async def transcribe_audio(audio: UploadFile = File(...)):
     # logger.info(('TOLT APP - Endpoint  /api/v1/transcribe/ - start processing %s', audio.filename))
