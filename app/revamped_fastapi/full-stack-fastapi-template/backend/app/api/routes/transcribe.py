@@ -1,3 +1,4 @@
+import tempfile
 import uuid
 from typing import Any
 
@@ -36,12 +37,25 @@ async def transcribe_audio(audio: UploadFile = File(...)):
     logger.info('TOLT APP - Endpoint  /api/v1/transcribe/ - start processing audio')
     # Convert audio to text - production
     # Save the audio file temporarily
-    with open(audio.filename, "wb") as buffer:
+    # create a temporary directory using the context manager
+    tmpdirname = tempfile.TemporaryDirectory()
+    # with tempfile.TemporaryDirectory() as tmpdirname:
+    #     print('created temporary directory', tmpdirname)
+    #     with open(f"{tmpdirname}/{audio.filename}", "wb") as buffer:
+    #         buffer.write(audio.file.read())
+    # # directory and contents have been removed
+
+    with open(f"{tmpdirname}/{audio.filename}", "wb") as buffer:
         buffer.write(audio.file.read())
-    audio_input = open(audio.filename, "rb")
+    # audio_input = open(audio.filename, "rb")
+    audio_input_as_bytes = await audio.file.read()
+    
 
     # Decode audio : donc là c'est là que j'appellerais mon composant whisper
-    transcribed_text_result = whisper_service.transcribe(audio_input)
+    # transcribed_text_result = whisper_service.transcribe(audio_input)
+    transcribed_text_result = whisper_service.transcribe(audio_input_as_bytes)
+    # transcribed_text_result = whisper_service.transcribe(f"{tmpdirname}/{audio.filename}")
+    
     
     # Guard: Ensure output
     if not transcribed_text_result:
