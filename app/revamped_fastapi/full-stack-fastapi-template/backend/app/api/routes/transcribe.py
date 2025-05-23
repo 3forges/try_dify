@@ -6,6 +6,11 @@ from sqlmodel import col, delete, func, select
 
 from app.speechtotext.whisper_service import whisper_service
 
+import logging
+
+logger = logging.getLogger('uvicorn.error')
+logger.setLevel(logging.INFO)
+
 # from app.models import (
 #     Item,
 #     Contribution
@@ -23,6 +28,8 @@ router = APIRouter(prefix="/transcribe", tags=["transcribe"])
 # https://github.com/fastapi/fastapi/issues/5278
 @router.post("/")
 async def transcribe_audio(audio: UploadFile = File(...)):
+    # logger.info(('TOLT APP - Endpoint  /api/v1/transcribe/ - start processing %s', audio.filename))
+    logger.info('TOLT APP - Endpoint  /api/v1/transcribe/ - start processing audio')
     # Convert audio to text - production
     # Save the audio file temporarily
     with open(audio.filename, "wb") as buffer:
